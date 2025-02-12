@@ -396,3 +396,5 @@ document.querySelectorAll('.agreement-section').forEach((section, index) => {
     section.style.transition = 'all 0.5s ease-out';
     section.style.transitionDelay = `${index * 0.1}s`;
 }); 
+
+
