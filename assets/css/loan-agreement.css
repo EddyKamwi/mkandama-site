@@ -45,6 +45,9 @@ body{
 
 .logo {
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     color: var(--text-light);
     font-size: 1.4rem;
     font-weight: 600;
