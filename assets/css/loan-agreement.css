@@ -41,9 +41,19 @@
 }
 
 .logo {
+    position: relative;
     color: var(--text-light);
     font-size: 1.4rem;
     font-weight: 600;
+}
+
+.logo-text {
+    position: absolute;
+    right: .6rem;
+    bottom: -0.2rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-light);
 }
 
 .nav-links {
