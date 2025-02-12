@@ -5,7 +5,7 @@ const navLinks = document.querySelector('.nav-links');
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
     hamburger.classList.toggle('active');
-    
+
     // Enhanced animation
     if (hamburger.classList.contains('active')) {
         hamburger.style.transform = 'rotate(90deg)';
@@ -14,8 +14,10 @@ hamburger.addEventListener('click', () => {
                 span.style.opacity = '0';
             } else if (index === 0) {
                 span.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                span.style.backgroundColor = 'var(--secondary-color)';
             } else {
                 span.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                span.style.backgroundColor = 'var(--secondary-color)';
             }
         });
     } else {
@@ -23,27 +25,28 @@ hamburger.addEventListener('click', () => {
         hamburger.querySelectorAll('span').forEach(span => {
             span.style.opacity = '1';
             span.style.transform = 'none';
+            span.style.backgroundColor = 'var(--text-light)';
         });
     }
 });
 
 // Smooth scroll to contact section
 function scrollToContact() {
-    document.querySelector('#contact').scrollIntoView({ 
-        behavior: 'smooth' 
+    document.querySelector('#contact').scrollIntoView({
+        behavior: 'smooth'
     });
 }
 
 // Form submission handling
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    
+
     // Get form data
     const formData = new FormData(this);
-    
+
     // Here you would typically send the data to a server
     alert('Thank you for your message! We will contact you soon.');
-    
+
     // Reset form
     this.reset();
 });
@@ -58,13 +61,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add scroll event listener for navbar
-window.addEventListener('scroll', function() {
+// Update navbar background color on scroll
+window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
-        navbar.style.backgroundColor = '#133821';
+        // Darker shade of primary color
+        navbar.style.backgroundColor = 'rgba(0, 7, 20, 0.98)';
     } else {
-        navbar.style.backgroundColor = '#1a4d2e';
+        // Reset to primary color
+        navbar.style.backgroundColor = 'var(--primary-color)';
     }
 });
 
@@ -90,11 +95,21 @@ const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            // Special handling for agreement sections
+            if (entry.target.classList.contains('agreement-section')) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
         }
     });
 }, observerOptions);
 
 sections.forEach(section => {
+    sectionObserver.observe(section);
+});
+
+// Observe all sections including agreement sections
+document.querySelectorAll('section, .agreement-section').forEach(section => {
     sectionObserver.observe(section);
 });
 
@@ -108,6 +123,11 @@ window.addEventListener('load', () => {
     loadingOverlay.style.opacity = '0';
     setTimeout(() => {
         loadingOverlay.remove();
+        // Trigger agreement section animations after page load
+        document.querySelectorAll('.agreement-section').forEach(section => {
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        });
     }, 500);
 });
 
@@ -166,14 +186,14 @@ inputs.forEach(input => {
     input.addEventListener('invalid', (e) => {
         e.preventDefault();
         input.classList.add('error');
-        
+
         let message = 'Please fill out this field';
         if (input.type === 'email') {
             message = 'Please enter a valid email address';
         } else if (input.type === 'tel') {
             message = 'Please enter a valid phone number';
         }
-        
+
         const existingMessage = input.parentElement.querySelector('.error-message');
         if (!existingMessage) {
             const errorDiv = document.createElement('div');
@@ -182,7 +202,7 @@ inputs.forEach(input => {
             input.parentElement.appendChild(errorDiv);
         }
     });
-    
+
     input.addEventListener('input', () => {
         input.classList.remove('error');
         const errorMessage = input.parentElement.querySelector('.error-message');
@@ -192,7 +212,7 @@ inputs.forEach(input => {
     });
 });
 
-// Add CSS for error states
+// Update error styles
 const style = document.createElement('style');
 style.textContent = `
     .contact-form input.error,
@@ -211,6 +231,33 @@ style.textContent = `
         0%, 100% { transform: translateX(0); }
         25% { transform: translateX(-10px); }
         75% { transform: translateX(10px); }
+    }
+
+    .scroll-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        color: var(--text-light);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 1000;
+    }
+    
+    .scroll-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .scroll-top:hover {
+        background: var(--secondary-color);
+        transform: translateY(-5px);
     }
 `;
 document.head.appendChild(style);
@@ -236,36 +283,6 @@ scrollTopButton.addEventListener('click', () => {
     });
 });
 
-// Add CSS for scroll-to-top button
-style.textContent += `
-    .scroll-top {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 40px;
-        height: 40px;
-        background: #1a4d2e;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.3s;
-        z-index: 1000;
-    }
-    
-    .scroll-top.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .scroll-top:hover {
-        background: #2a6d4e;
-        transform: translateY(-5px);
-    }
-`;
-
 // Image preloader
 function preloadImages() {
     const images = document.querySelectorAll('img');
@@ -287,19 +304,18 @@ window.addEventListener('load', () => {
 // Add image loading animation
 document.querySelectorAll('img').forEach(img => {
     img.classList.add('image-loading');
-    img.onload = function() {
+    img.onload = function () {
         this.classList.remove('image-loading');
         this.classList.add('image-loaded');
     };
 });
 
-// Active link indicator
+// Update active link indicator colors
 function updateActiveLink() {
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-links a');
-    
-    // Get current scroll position
-    let fromTop = window.scrollY + 100; // Offset for better trigger point
+
+    let fromTop = window.scrollY + 100;
 
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -307,18 +323,76 @@ function updateActiveLink() {
         const sectionId = section.getAttribute('id');
         const correspondingLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
 
-        // Check if section is in viewport
         if (fromTop >= sectionTop && fromTop < sectionTop + sectionHeight) {
-            // Remove active class from all links
             navLinks.forEach(link => {
                 link.classList.remove('active');
+                link.style.color = 'var(--text-light)';
             });
-            // Add active class to current section's link
-            correspondingLink.classList.add('active');
+            if (correspondingLink) {
+                correspondingLink.classList.add('active');
+                correspondingLink.style.color = 'var(--secondary-color)';
+            }
         }
     });
 }
 
 // Add scroll event listener for active link
 window.addEventListener('scroll', updateActiveLink);
-window.addEventListener('load', updateActiveLink); 
+window.addEventListener('load', updateActiveLink);
+
+// FAQ Functionality
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        faqItem.classList.toggle('active');
+    });
+});
+
+// Update navbar background color on scroll for all pages
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.backgroundColor = 'rgba(0, 7, 20, 0.98)';
+    } else {
+        navbar.style.backgroundColor = 'var(--primary-color)';
+    }
+});
+
+// Add smooth scroll behavior for loan agreement page
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        // Don't prevent default for links to other pages
+        if (this.getAttribute('href').includes('.html')) {
+            return;
+        }
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Add initial animation for loan agreement hero section
+window.addEventListener('load', () => {
+    const heroText = document.querySelector('.hero-text');
+    if (heroText) {
+        heroText.style.opacity = '0';
+        heroText.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            heroText.style.opacity = '1';
+            heroText.style.transform = 'translateY(0)';
+            heroText.style.transition = 'all 0.8s ease-out';
+        }, 300);
+    }
+});
+
+// Add animation for agreement sections
+document.querySelectorAll('.agreement-section').forEach((section, index) => {
+    section.style.opacity = '0';
+    section.style.transform = 'translateY(20px)';
+    section.style.transition = 'all 0.5s ease-out';
+    section.style.transitionDelay = `${index * 0.1}s`;
+}); 
