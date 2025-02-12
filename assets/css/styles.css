@@ -38,6 +38,7 @@
 }
 
 .logo {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,6 +52,14 @@
     max-width: 240px;
     height: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+.logo-text {
+    position: absolute;
+    right: 1rem;
+    bottom: 1.6rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-light);
 }
 
 .nav-links {
