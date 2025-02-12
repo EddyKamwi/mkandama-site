@@ -25,6 +25,9 @@
     font-family: Arial, sans-serif;
     transition: all 0.3s ease-in-out;
 }
+body{
+    padding-top: 4rem;
+}
 
 /* Navbar Styles */
 .navbar {
@@ -447,7 +450,7 @@
 /* Responsive styles */
 @media (max-width: 768px) {
     .loan-agreement-hero.hero {
-        height: 30vh;
+        height: 40vh;
     }
 
     .loan-agreement-hero .hero-text h1 {
