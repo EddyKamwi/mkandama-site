@@ -1663,9 +1663,49 @@ h2 {
     animation: fadeEffect 3s infinite;
 }
 
-@keyframes fadeEffect {
-    0% { opacity: 0; }
-    33% { opacity: 1; }
-    66% { opacity: 0; }
-    100% { opacity: 0; }
+
+.staff-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.staff-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.staff-card {
+    background: var(--gray-light);
+    color: var(--text-dark);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.staff-img {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+}
+
+.staff-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.staff-role {
+    color: var(--gray-medium);
+    font-size: 0.9em;
+}
+
+.staff-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 163, 255, 0.3);
 }
